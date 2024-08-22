@@ -18,9 +18,19 @@ connectDB();
 const app = express();
 
 //miidlewares
-app.use(cors());
+app.use(
+  cors({
+    origin: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 app.use(express.json());
 app.use(morgan("dev"));
+
+app.get("/", (req, res) => {
+  res.json("server is up and running");
+});
 
 //routes
 app.use("/api/v1/auth", authRoutes);
